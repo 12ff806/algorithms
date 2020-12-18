@@ -19,6 +19,9 @@ int max(int a, int b)
     }
 }
 
+/*
+ * O(n^2)
+ */
 int length_of_lis_v1(int s[], int n)
 {
     int m, dp[n];
@@ -44,6 +47,9 @@ int length_of_lis_v1(int s[], int n)
 }
 
 
+/*
+ * O(n^2)
+ */
 int length_of_lis_v2(int s[], int n)
 {
     int m, dp[n];
@@ -73,6 +79,9 @@ int length_of_lis_v2(int s[], int n)
 }
 
 
+/*
+ * O(nlogn)
+ */
 int length_of_lis_v3(int s[], int n)
 {
     // top[0] 存储的值表示当最长递增子序列长度为1时的最小值
@@ -114,8 +123,8 @@ int main()
     //printf("n = %d\n", n);
     
     //int r = length_of_lis_v1(s, n);
-    int r = length_of_lis_v2(s, n);
-    //int r = length_of_lis_v3(s, n);
+    //int r = length_of_lis_v2(s, n);
+    int r = length_of_lis_v3(s, n);
 
     printf("%d\n", r);
     return 0;
