@@ -39,6 +39,7 @@ int length_of_lis_v1(int s[], int n)
         printf("%d ", dp[k]);
         res = max(res, dp[k]);
     }
+    printf("\n");
     return res;
 }
 
@@ -67,7 +68,42 @@ int length_of_lis_v2(int s[], int n)
             res = dp[k];
         }
     }
+    printf("\n");
     return res;
+}
+
+
+int length_of_lis_v3(int s[], int n)
+{
+    // top[0] 存储的值表示当最长递增子序列长度为1时的最小值
+    int top[n];
+    // piles 表示 top 数组实际存储元素个数 即为最长递增子序列的长度
+    int piles = 0;
+
+    for (int i = 0; i < n; i++) {
+        // 要处理的元素
+        int ele = s[i];
+
+        int left = 0, right = piles;
+        while (left < right) {
+            int mid = (left + right) / 2;
+            if (top[mid] > ele) {
+                right = mid;
+            }
+            else if (top[mid] < ele) {
+                left = mid + 1;
+            }
+            else {
+                right = mid;
+            }
+        }
+        
+        if (left == piles) {
+            piles ++;
+        }
+        top[left] = ele;
+    }
+    return piles;
 }
 
 
@@ -75,12 +111,13 @@ int main()
 {
     int s[] = {10, 9, 2, 5, 3, 7, 101, 18, 19};
     int n = sizeof(s) / sizeof(int);
-    printf("n = %d\n", n);
+    //printf("n = %d\n", n);
     
     //int r = length_of_lis_v1(s, n);
     int r = length_of_lis_v2(s, n);
+    //int r = length_of_lis_v3(s, n);
 
-    printf("\n%d\n", r);
+    printf("%d\n", r);
     return 0;
 }
 
