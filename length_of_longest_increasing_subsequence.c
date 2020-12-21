@@ -9,6 +9,9 @@
 #include <stdio.h>
 
 
+int bin_search(int *b, int len, int w);
+
+
 int max(int a, int b)
 {
     if (a >= b) {
@@ -116,6 +119,47 @@ int length_of_lis_v3(int s[], int n)
 }
 
 
+/*O(nlogn)*/
+int length_of_lis_v4(int s[], int n)
+{
+    int len = 1;
+    int B[n];
+    
+    int i, pos = 0;
+    for (i = 1; i < n; i++) {
+        if (s[i] > B[len-1]) {
+            B[len] = s[i];
+            len++;
+        }
+        else {
+            pos = bin_search(B, len, s[i]);
+            B[pos] = s[i];
+        }
+    }
+    return len;
+}
+
+int bin_search(int *b, int len, int w)
+{
+    int left = 0, right = len - 1;
+    int mid;
+    
+    while (left <= right) {
+        mid = left + (right - left) / 2;
+        if (b[mid] > w) {
+            right = mid - 1;
+        }
+        else if (b[mid] < w) {
+            left = mid + 1;
+        }
+        else {
+            return mid;
+        }
+    }
+    return left;
+}
+
+
 int main()
 {
     int s[] = {10, 9, 2, 5, 3, 7, 101, 18, 19};
@@ -124,7 +168,8 @@ int main()
     
     //int r = length_of_lis_v1(s, n);
     //int r = length_of_lis_v2(s, n);
-    int r = length_of_lis_v3(s, n);
+    //int r = length_of_lis_v3(s, n);
+    int r = length_of_lis_v4(s, n);
 
     printf("%d\n", r);
     return 0;
